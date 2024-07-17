@@ -94,29 +94,6 @@ void Movement::moveToGoal(geometry_msgs::PointStamped goal,bool sleep){
     }
 
     Eigen::Quaterniond q = Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(),Eigen::Vector3d(startToGoal.x(),startToGoal.y(),0.0));
-    
-    double yaw = ExCov::qToYaw(pose_->data.pose.orientation);//ロボットの角度
-    // double Yaw = ExCov::qToYaw(q);
-    // if(Yaw < -1.57 && yaw > 1.57){
-
-    //     q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
-
-    // }else if(Yaw > 1.57 && yaw < -1.57){
-
-    //     q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
-
-    // }else{
-
-    //     if(Yaw - yaw > 0){
-    //         q = q * Eigen::AngleAxisd(1.5, Eigen::Vector3d::UnitZ());
-    //     }else{
-    //         q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
-    //     }
-
-    // }
-    
-    
-
     mbg.target_pose.pose = ExCos::msgPose(goal.point,ExCov::eigenQuaToGeoQua(q));
 
     ROS_DEBUG_STREAM("goal pose : " << mbg.target_pose.pose);
@@ -137,7 +114,7 @@ void Movement::moveToGoal(geometry_msgs::PointStamped goal,bool sleep){
         while(!ac.getState().isDone() && ros::ok()){
             publishMovementStatus("move_base");
             if(lookupCostmap(mbg.target_pose)){ //コストマップに被っているばあい
-                //目的地を再設定
+                // 目的地を再設定
                 if(!resetGoal(mbg.target_pose)){ 
                     ROS_INFO_STREAM("current goal is canceled");
                     ac.cancelGoal(); //リセット出来ないばあいは目標をキャンセ留守る
@@ -152,8 +129,8 @@ void Movement::moveToGoal(geometry_msgs::PointStamped goal,bool sleep){
                 ROS_INFO_STREAM("send new goal to move_base");
                 ac.sendGoal(mbg);
                 // ゴールtopicに再出力
-                 goal_->pub.publish(ExCov::poseStampedToPointStamped(mbg.target_pose));
-                 ROS_INFO_STREAM("wait for result");
+                goal_->pub.publish(ExCov::poseStampedToPointStamped(mbg.target_pose));
+                ROS_INFO_STREAM("wait for result");
             }
             rate.sleep();
         }

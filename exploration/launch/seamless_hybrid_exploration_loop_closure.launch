@@ -8,10 +8,8 @@
 
     <arg name="debug" default="false"/>
     <arg name="rotation" default="false"/>
-    <arg name="fill_map" default="map"/>
+    <arg name="fill_map" default="fill_map"/>
     <arg name="end_method" default="timer"/>
-     <arg name="map_fill" value="false"/>
-    
     
     <!-- <arg unless="$(arg multi)" name="map" default="/$(arg robot_name)/map"/> -->
     <arg unless="$(arg multi)" name="map" default="map_continuity"/>
@@ -19,7 +17,8 @@
 
     <group ns="$(arg robot_name)">
         <!-- exploration main -->
-        <include file="$(find exploration)/launch/includes/seamless_hybrid_exploration_actively_frontier.launch.xml">
+        <include file="$(find exploration)/launch/includes/seamless_hybrid_exploration_loop_closure.launch.xml">
+            <arg name="loop" value="loop_closure_counter"/>
             <arg name="area_diff" value="end/area_diff_averate"/>
             <!-- <arg name="pose_log" value="pose_log/merge"/> -->
             <!-- <arg name="pose_log" value="rtabmap/mapPath"/> -->
@@ -34,12 +33,12 @@
         </include>
 
         <!-- exploration support -->
-        <include file="$(find exploration)/launch/includes/exploration_support.launch.xml">
+        <include file="$(find exploration)/launch/includes/exploration_support_loop_closure.launch.xml">
             <arg name="robot_name" value="$(arg robot_name)"/>
             <arg name="use_rosbag" value="$(arg use_rosbag)"/>
             <arg name="frontier_detection" value="true"/>
             <arg name="branch_detection" value="true"/>
-            <arg name="map_fill" value="$(arg map_fill)"/>
+            <arg name="map_fill" value="true"/>
             <arg name="orig_map" value="$(arg map)"/>
             <arg name="fill_map" value="$(arg fill_map)"/>
             <arg name="pose_log" value="pose_log/optimized"/>
@@ -60,10 +59,7 @@
         </include>
 
         <include file="$(find exploration_support)/launch/rosbag_record.launch">
-            <arg name="topics" value="/$(arg robot_name)/map_continuity
-                                        /$(arg robot_name)/end/area/value
-                                        /$(arg robot_name)/end/area_diff/value
-                                        /$(arg robot_name)/end/area_diff_rate/value"/>
+            <arg name="topics" value="/$(arg robot_name)/map_continuity"/>
             <arg name="compress" value="true"/>
             <arg name="name" value="rosbag_seam_filtered"/>
         </include>

@@ -3,6 +3,7 @@
 #include <tf/transform_listener.h>
 #include <std_msgs/Int8.h>
 #include <std_msgs/Float64.h>
+#include <std_msgs/Bool.h>
 #include <exploration_libraly/struct.h>
 #include <exploration_libraly/construct.h>
 #include <dynamic_reconfigure/server.h>
@@ -17,6 +18,7 @@ namespace ExCos = ExpLib::Construct;
 
 LoopClosureCounter::LoopClosureCounter()
     :count(new ExStc::pubStruct<std_msgs::Int8>("loop_closure_counter/count",1))
+    ,loop(new ExStc::pubStruct<std_msgs::Bool>("loop_closure_counter",1, true))
     ,accumTemp(new ExStc::pubStruct<std_msgs::Float64>("loop_closure_counter/temp_accumlate",1))
     ,accumPerm(new ExStc::pubStruct<std_msgs::Float64>("loop_closure_counter/perm_accumlate",1))
     ,drs_(new dynamic_reconfigure::Server<exploration_support ::loop_closure_counter_parameter_reconfigureConfig>(ros::NodeHandle("~/loop"))){
@@ -70,6 +72,7 @@ void LoopClosureCounter::loopDetection(void){
         count->pub.publish(ExCos::msgInt8(loopCount));
         accumTemp->pub.publish(ExCos::msgDouble(accumTrans));
         accumPerm->pub.publish(ExCos::msgDouble(accumTransPerm));
+        loop->pub.publish(ExCos::msgBool(loopCount > 10 ? true : false));
         rate.sleep();
     }
 }
@@ -77,10 +80,10 @@ void LoopClosureCounter::loopDetection(void){
 void LoopClosureCounter::loadParams(void){
     ros::NodeHandle nh("~/loop");
     // dynamic parameters
-    nh.param<double>("loop_closure_threshold",LOOP_CLOSURE_THRESHOLD,0.0);
+    nh.param<double>("loop_closure_threshold",LOOP_CLOSURE_THRESHOLD,6.0);
     // static parameters
-    nh.param<std::string>("odom_frame_id",ODOM_FRAME_ID,"odom");
-    nh.param<std::string>("map_frame_id",MAP_FRAME_ID,"map");
+    nh.param<std::string>("odom_frame_id",ODOM_FRAME_ID,"/robot1/odom");
+    nh.param<std::string>("map_frame_id",MAP_FRAME_ID,"/robot1/map");
     nh.param<double>("publish_rate",PUBLISH_RATE,10.0);
     nh.param<std::string>("loop_parameter_file_path",LOOP_PARAMETER_FILE_PATH,"loop_last_parameters.yaml");
     nh.param<bool>("output_loop_parameters",OUTPUT_LOOP_PARAMETERS,true);

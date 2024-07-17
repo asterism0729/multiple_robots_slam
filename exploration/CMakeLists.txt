@@ -216,6 +216,15 @@ add_library(movement src/movement.cpp)
 add_dependencies(movement ${PROJECT_NAME}_gencfg)
 target_link_libraries(movement ${catkin_LIBRARIES})
 
+add_library(movement_ver2 src/movement_ver2.cpp)
+add_dependencies(movement_ver2 ${PROJECT_NAME}_gencfg)
+target_link_libraries(movement_ver2 ${catkin_LIBRARIES})
+
+
+add_library(movement_frontier src/movement_frontier.cpp)
+add_dependencies(movement_frontier ${PROJECT_NAME}_gencfg)
+target_link_libraries(movement_frontier ${catkin_LIBRARIES})
+
 add_library(sbe src/sensor_based_exploration.cpp)
 add_dependencies(sbe ${PROJECT_NAME}_gencfg)
 target_link_libraries(sbe ${catkin_LIBRARIES})
@@ -239,7 +248,7 @@ add_executable(frontier_based_exploration src/frontier_based_exploration_node.cp
 target_link_libraries(frontier_based_exploration
   ${catkin_LIBRARIES} 
   fbe
-  movement
+  movement_frontier
 )
 
 add_executable(seamless_hybrid_exploration src/seamless_hybrid_exploration_node.cpp)
@@ -275,6 +284,22 @@ target_link_libraries(rrt_point_publisher ${catkin_LIBRARIES})
 
 add_executable(seamless_hybrid_exploration_actively_frontier src/seamless_hybrid_exploration_actively_frontier_node.cpp)
 target_link_libraries(seamless_hybrid_exploration_actively_frontier
+ ${catkin_LIBRARIES}
+ she
+#  fbe
+ movement
+)
+
+add_executable(seamless_hybrid_exploration_actively_frontier_ver2 src/seamless_hybrid_exploration_actively_frontier_node_ver2.cpp)
+target_link_libraries(seamless_hybrid_exploration_actively_frontier_ver2
+ ${catkin_LIBRARIES}
+ she
+#  fbe
+ movement_ver2
+)
+
+add_executable(seamless_hybrid_exploration_loop_closure src/seamless_hybrid_exploration_loop_closure_node.cpp)
+target_link_libraries(seamless_hybrid_exploration_loop_closure
  ${catkin_LIBRARIES}
  she
 #  fbe

@@ -108,12 +108,12 @@ void BranchDetection::scanCB(const sensor_msgs::LaserScanConstPtr& msg){
         // branches.emplace_back(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, msg->header.frame_id, ExCos::msgPoint((ss.x[i+1] + ss.x[i])/2, (ss.y[i+1] + ss.y[i])/2)));
         // branches.emplace_back(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, scan.header.frame_id, ExCos::msgPoint((ss.x[i+1] + ss.x[i])/2, (ss.y[i+1] + ss.y[i])/2)));
         //branches.emplace_back(ExCos::msgBranch(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, scan.header.frame_id, ExCos::msgPoint((ss.x[i+1] + ss.x[i])/2, 0))));
-        branches.emplace_back(ExCos::msgBranch(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, scan.header.frame_id, ExCos::msgPoint((ss.x[i+1] + ss.x[i])/2, (ss.y[i+1] + ss.y[i])/2))));
-        // if(ss.ranges[i] < ss.ranges[i+ 1]){
-        //     branches.emplace_back(ExCos::msgBranch(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, scan.header.frame_id, ExCos::msgPoint(ss.x[i] + 0.6, (ss.y[i+1] + ss.y[i])/2))));
-        // }else{
-        //     branches.emplace_back(ExCos::msgBranch(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, scan.header.frame_id, ExCos::msgPoint(ss.x[i+1] + 0.6, (ss.y[i+1] + ss.y[i])/2))));
-        // }
+        //branches.emplace_back(ExCos::msgBranch(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, scan.header.frame_id, ExCos::msgPoint((ss.x[i+1] + ss.x[i])/2, (ss.y[i+1] + ss.y[i])/2))));
+        if(ss.ranges[i] < ss.ranges[i+1]){
+            branches.emplace_back(ExCos::msgBranch(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, scan.header.frame_id, ExCos::msgPoint(ss.x[i] + 0.6, (ss.y[i+1] + ss.y[i])/2))));
+        }else{
+            branches.emplace_back(ExCos::msgBranch(ExUtl::coordinateConverter2d<geometry_msgs::Point>(listener, pose_->data.header.frame_id, scan.header.frame_id, ExCos::msgPoint(ss.x[i+1] + 0.6, (ss.y[i+1] + ss.y[i])/2))));
+        }
 	}
 
     ROS_INFO_STREAM("Branch Found : " << branches.size());
@@ -310,3 +310,4 @@ void BranchDetection::outputParams(void){
     ofs << "omb_map_window_y: " << OMB_MAP_WINDOW_Y << std::endl;
     ofs << "on_map_branch_rate: " << ON_MAP_BRANCH_RATE << std::endl;
  }
+

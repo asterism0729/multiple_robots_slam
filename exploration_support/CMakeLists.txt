@@ -266,8 +266,17 @@ add_executable(branch_detection
  src/branch_detection_node.cpp
  src/branch_detection.cpp
 )
+
 add_dependencies(branch_detection ${PROJECT_NAME}_gencfg)
 target_link_libraries(branch_detection ${catkin_LIBRARIES})
+
+add_executable(branch_detection_ver2
+ src/branch_detection_node_ver2.cpp
+ src/branch_detection_ver2.cpp
+)
+
+add_dependencies(branch_detection_ver2 ${PROJECT_NAME}_gencfg)
+target_link_libraries(branch_detection_ver2 ${catkin_LIBRARIES})
 
 add_executable(loop_closure_counter
  src/loop_closure_counter_node.cpp

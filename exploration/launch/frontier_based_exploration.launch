@@ -50,7 +50,8 @@
         </include>
         
         <include file="$(find exploration_support)/launch/rosbag_record.launch">
-            <arg name="topics" value="/$(arg robot_name)/map_continuity"/>
+            <arg name="topics" value="/$(arg robot_name)/map_continuity
+                                        /$(arg robot_name)/end/area/value"/>
             <arg name="compress" value="true"/>
             <arg name="name" value="rosbag_fbe_filtered"/>
         </include>

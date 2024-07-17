@@ -96,24 +96,24 @@ void Movement::moveToGoal(geometry_msgs::PointStamped goal,bool sleep){
     Eigen::Quaterniond q = Eigen::Quaterniond::FromTwoVectors(Eigen::Vector3d::UnitX(),Eigen::Vector3d(startToGoal.x(),startToGoal.y(),0.0));
     
     double yaw = ExCov::qToYaw(pose_->data.pose.orientation);//ロボットの角度
-    // double Yaw = ExCov::qToYaw(q);
-    // if(Yaw < -1.57 && yaw > 1.57){
+    double Yaw = ExCov::qToYaw(q);
+    if(Yaw < -1.57 && yaw > 1.57){
 
-    //     q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
+        q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
 
-    // }else if(Yaw > 1.57 && yaw < -1.57){
+    }else if(Yaw > 1.57 && yaw < -1.57){
 
-    //     q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
+        q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
 
-    // }else{
+    }else{
 
-    //     if(Yaw - yaw > 0){
-    //         q = q * Eigen::AngleAxisd(1.5, Eigen::Vector3d::UnitZ());
-    //     }else{
-    //         q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
-    //     }
+        if(Yaw - yaw > 0){
+            q = q * Eigen::AngleAxisd(1.5, Eigen::Vector3d::UnitZ());
+        }else{
+            q = q * Eigen::AngleAxisd(-1.5, Eigen::Vector3d::UnitZ());
+        }
 
-    // }
+    }
     
     
 

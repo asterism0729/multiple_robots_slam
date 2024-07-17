@@ -33,7 +33,7 @@
     </include>
     <include>
       <uri>model://number6</uri>
-      <pose>43.3236 -0.164013 0.4 0 -0 0</pose>
+      <pose>43.3236 -0.164013 0.4 0 -0 0</pose>  
     </include>
     <include>
       <uri>model://number7</uri>

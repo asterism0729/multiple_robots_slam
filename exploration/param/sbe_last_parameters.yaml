@@ -1,0 +1,4 @@
+last_goal_effect: true
+last_goal_tolerance: 1
+canceled_goal_effect: true
+canceled_goal_tolerance: 0.5

@@ -25,7 +25,7 @@
     </node>
 
     <!-- branch_detection -->
-    <node if="$(arg branch_detection)" pkg="exploration_support" type="branch_detection" name="branch_detection">
+    <node if="$(arg branch_detection)" pkg="exploration_support" type="branch_detection_ver2" name="branch_detection_ver2">
         <remap if="$(arg map_fill)" from="map" to="$(arg fill_map)"/>
         <remap unless="$(arg map_fill)" from="map" to="$(arg orig_map)"/>
         <remap from="pose_log" to="$(arg pose_log)"/>
@@ -72,6 +72,9 @@
 
     <!-- goal_cancel_observer -->
     <node pkg="exploration_support" type="goal_cancel_observer" name="goal_cancel_observer"/>
+
+    <!-- loop_closure_counter -->
+    <node pkg="exploration_support" type="loop_closure_counter" name="loop_closure_counter"/>
 
     <!-- poselog_optimizer -->
     <node pkg="exploration_support" type="poselog_optimizer" name="poselog_optimizer" >

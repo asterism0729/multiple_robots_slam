@@ -73,6 +73,9 @@
     <!-- goal_cancel_observer -->
     <node pkg="exploration_support" type="goal_cancel_observer" name="goal_cancel_observer"/>
 
+    <!-- loop_closure_counter -->
+    <node pkg="exploration_support" type="loop_closure_counter" name="loop_closure_counter"/>
+
     <!-- poselog_optimizer -->
     <node pkg="exploration_support" type="poselog_optimizer" name="poselog_optimizer" >
         <remap from="pose_log" to="pose_log/$(arg robot_name)"/>

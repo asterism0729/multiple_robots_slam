@@ -19,7 +19,7 @@
 
     <group ns="$(arg robot_name)">
         <!-- exploration main -->
-        <include file="$(find exploration)/launch/includes/seamless_hybrid_exploration_actively_frontier.launch.xml">
+        <include file="$(find exploration)/launch/includes/seamless_hybrid_exploration_actively_frontier_ver2.launch.xml">
             <arg name="area_diff" value="end/area_diff_averate"/>
             <!-- <arg name="pose_log" value="pose_log/merge"/> -->
             <!-- <arg name="pose_log" value="rtabmap/mapPath"/> -->
@@ -34,7 +34,7 @@
         </include>
 
         <!-- exploration support -->
-        <include file="$(find exploration)/launch/includes/exploration_support.launch.xml">
+        <include file="$(find exploration)/launch/includes/exploration_support_ver2.launch.xml">
             <arg name="robot_name" value="$(arg robot_name)"/>
             <arg name="use_rosbag" value="$(arg use_rosbag)"/>
             <arg name="frontier_detection" value="true"/>

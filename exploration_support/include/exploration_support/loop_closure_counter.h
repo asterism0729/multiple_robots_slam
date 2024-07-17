@@ -28,6 +28,9 @@ namespace std_msgs{
     template <class ContainerAllocator>
     struct Int8_;
     typedef ::std_msgs::Int8_<std::allocator<void>> Int8;
+    template <class ContainerAllocator>
+    struct Bool_;
+    typedef ::std_msgs::Bool_<std::allocator<void>> Bool;
 }
 // 前方宣言ここまで
 
@@ -48,6 +51,8 @@ class LoopClosureCounter{
 
         // variables
         std::unique_ptr<ExStc::pubStruct<std_msgs::Int8>> count;
+
+        std::unique_ptr<ExStc::pubStruct<std_msgs::Bool>> loop;
         std::unique_ptr<ExStc::pubStruct<std_msgs::Float64>> accumTemp;
         std::unique_ptr<ExStc::pubStruct<std_msgs::Float64>> accumPerm;
         std::unique_ptr<dynamic_reconfigure::Server<exploration_support ::loop_closure_counter_parameter_reconfigureConfig>> drs_;

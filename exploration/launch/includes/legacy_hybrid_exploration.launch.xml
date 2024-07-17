@@ -55,7 +55,7 @@
     </node>
 
     <node pkg="exploration_support" type="loop_closure_counter" name="loop_closure_counter">
-        <rosparam file="$(find exploration_support)/param/loop_last_parameters.yaml" command="load"/ ns="loop">
+        <rosparam file="$(find exploration_support)/param/loop_last_parameters.yaml" command="load" ns="loop">
         <param name="loop/loop_parameter_file_path" value="$(find exploration_support)/param/loop_last_parameters.yaml"/>
         <param name="loop/odom_frame_id" value="$(arg robot_name)/odom"/>
         <param name="loop/map_frame_id" value="$(arg robot_name)/map"/>

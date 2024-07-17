@@ -1,7 +1,7 @@
-end_area: 810
+end_area: 270
 end_frontier: 0
-end_time: 3.6e+07
-end_area_diff: 5
-end_area_diff_interval: 600
-end_area_diff_rate: 0.4
-end_area_diff_averate: 0.4
+end_time: 10000
+end_area_diff: 20
+end_area_diff_interval: 120
+end_area_diff_rate: 0.3
+end_area_diff_averate: 0.3

@@ -7,7 +7,7 @@
 #include <geometry_msgs/PointStamped.h>
 
 int main(int argc, char* argv[]){
-    ros::init(argc, argv, "seamless_hybrid_exploration_actively_frontier");
+    ros::init(argc, argv, "seamless_hybrid_exploration_loop_closure");
 
     SeamlessHybridExploration she;
     // FrontierBasedExploration fbe;
@@ -15,6 +15,7 @@ int main(int argc, char* argv[]){
 
     ExpLib::Struct::subStruct<std_msgs::Bool> end("end",1);
     ExpLib::Struct::subStruct<std_msgs::Bool> areaDiff("area_diff",1);
+    ExpLib::Struct::subStruct<std_msgs::Bool> loop("/robot1/loop_closure_counter",1);
 
     geometry_msgs::PointStamped goal;
     ros::NodeHandle p("~");
@@ -46,7 +47,7 @@ int main(int argc, char* argv[]){
     if(!DEBUG && ROTATION) mv.oneRotation();
 
     while(ros::ok()){
-        if(!areaDiff.q.callOne(ros::WallDuration(0.5)) && areaDiff.data.data) break;// ここに切り替え条件入れる
+        if(!loop.q.callOne(ros::WallDuration(0.5)) && loop.data.data) break;// ここに切り替え条件入れる
         branchTimer() && she.getGoal(goal) && !DEBUG ? mv.moveToGoal(goal) : mv.moveToForward();
         if(AUTO_FINISH && !end.q.callOne(ros::WallDuration(0.5)) && end.data.data) break;
         ros::spinOnce();
